@@ -41,6 +41,12 @@ func mains(args []string) error {
 	}
 	defer ptmx.Close()
 
+	width, height, err := term.GetSize(int(os.Stdout.Fd()))
+	if err != nil {
+		return err
+	}
+	ptmx.Resize(width, height)
+
 	sh := ptmx.Command("cmd.exe")
 	if err := sh.Start(); err != nil {
 		return err
