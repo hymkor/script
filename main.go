@@ -15,6 +15,7 @@ import (
 )
 
 var (
+	flagAppend  = flag.Bool("a", false, "append")
 	flagCommand = flag.String("c", "cmd.exe", "execute command instead of interactive shell")
 )
 
@@ -35,7 +36,12 @@ func mains(args []string) error {
 	if len(args) > 0 {
 		fn, args = args[0], args[1:]
 	}
-	typeScript, err := os.Create(fn)
+	var typeScript *os.File
+	if *flagAppend {
+		typeScript, err = os.OpenFile(fn, os.O_APPEND|os.O_CREATE|os.O_WRONLY, 0644)
+	} else {
+		typeScript, err = os.Create(fn)
+	}
 	if err != nil {
 		return err
 	}
