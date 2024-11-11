@@ -6,7 +6,6 @@ import (
 	"io"
 	"os"
 	"runtime"
-	"strings"
 
 	"golang.org/x/term"
 
@@ -60,7 +59,7 @@ func mains(args []string) error {
 	}
 	ptmx.Resize(width, height)
 
-	fields := strings.Fields(*flagCommand)
+	fields := splitField(*flagCommand)
 	sh := ptmx.Command(fields[0], fields[1:]...)
 	if err := sh.Start(); err != nil {
 		return err
