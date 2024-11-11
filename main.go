@@ -1,15 +1,21 @@
 package main
 
 import (
+	"flag"
 	"fmt"
 	"io"
 	"os"
+	"strings"
 
 	"golang.org/x/term"
 
 	"github.com/aymanbagabas/go-pty"
 
 	"github.com/hymkor/go-windows1x-virtualterminal"
+)
+
+var (
+	flagCommand = flag.String("c", "cmd.exe", "execute command instead of interactive shell")
 )
 
 func mains(args []string) error {
@@ -47,7 +53,8 @@ func mains(args []string) error {
 	}
 	ptmx.Resize(width, height)
 
-	sh := ptmx.Command("cmd.exe")
+	fields := strings.Fields(*flagCommand)
+	sh := ptmx.Command(fields[0], fields[1:]...)
 	if err := sh.Start(); err != nil {
 		return err
 	}
