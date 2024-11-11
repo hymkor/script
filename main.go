@@ -5,6 +5,7 @@ import (
 	"fmt"
 	"io"
 	"os"
+	"runtime"
 	"strings"
 
 	"golang.org/x/term"
@@ -77,8 +78,16 @@ func mains(args []string) error {
 	return sh.Wait()
 }
 
+var version = "snapshot"
+
 func main() {
-	if err := mains(os.Args[1:]); err != nil {
+	flag.Usage = func() {
+		fmt.Fprintf(flag.CommandLine.Output(), "Usage of %s %s-%s-%s:\n",
+			os.Args[0], version, runtime.GOOS, runtime.GOARCH)
+		flag.PrintDefaults()
+	}
+	flag.Parse()
+	if err := mains(flag.Args()); err != nil {
 		fmt.Fprintln(os.Stderr, err.Error())
 		os.Exit(1)
 	}
