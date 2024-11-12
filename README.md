@@ -1,8 +1,8 @@
 script.exe
 ==========
 
-- Make typescript of terminal session like [that of Linux](https://www.man7.org/linux/man-pages/man1/script.1.html)
-- Windows 10 or later version implemented with [aymanbagabas/go-pty](https://github.com/aymanbagabas/go-pty)
+- Make typescript of terminal session like [that of Linux](https://www.man7.org/linux/man-pages/man1/script.1.html) on Windows10 or later
+- Implemented with [aymanbagabas/go-pty](https://github.com/aymanbagabas/go-pty)
 
 ```
 script [options] [file]
