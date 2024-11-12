@@ -12,3 +12,5 @@ Usage:
 
 - `-a` Append the output to specified file or **"typescript"**
 - `-c command` Run the command rather than cmd.exe
+
+![demo](./demo.gif)
