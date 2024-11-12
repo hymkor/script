@@ -45,7 +45,16 @@ func mains(args []string) error {
 	if err != nil {
 		return err
 	}
-	defer typeScript.Close()
+	fmt.Fprintf(os.Stderr, "Script started, output log file is '%s'.\n", fn)
+
+	defer func() {
+		fmt.Fprintln(os.Stderr, "exit")
+		if err := typeScript.Close(); err != nil {
+			fmt.Fprintln(os.Stderr, err.Error())
+		} else {
+			fmt.Fprintln(os.Stderr, "Script done.")
+		}
+	}()
 
 	ptmx, err := pty.New()
 	if err != nil {
